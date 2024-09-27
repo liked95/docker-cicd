@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
@@ -26,6 +29,7 @@ jobs:
           load: true
       -
         name: Build and push
+        if: github.event_name == 'push' # Only push images on push events, not on PRs
         uses: docker/build-push-action@v6
         with:
           platforms: linux/amd64,linux/arm64/v8
